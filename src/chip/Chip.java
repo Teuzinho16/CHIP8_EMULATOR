@@ -132,6 +132,13 @@ public class Chip {
 			
 			case 0x8000:
 				switch(opcode & 0x000F) {
+				
+					case 0x0000://8XY0: Sets Vx to the value of Vy
+						V[(opcode & 0x0f00) >> 8] = V[(opcode & 0x00f0) >>4];
+						pc += 2;
+						break;
+						
+					
 					case 0x0002: //8XY2: Sets VX to VX & VY
 						V[(opcode & 0x0f00) >> 8] = (char)(V[(opcode & 0x0f00) >> 8] & V[(opcode & 0x00f0) >> 8]);
 						pc += 2;
@@ -146,6 +153,16 @@ public class Chip {
 							V[0xF] = 0;
 						}
 						V[x_x] = (char)((V[x_x] + V[y]) & 0xFF);
+						pc += 2;
+						break;
+						
+					case 0x0005://8XY5 VY is subtracted from VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
+						if(V[(opcode & 0x0f00) >> 8] > V[(opcode & 0x00f0) >> 4]) {
+							V[0xF] = 1; //no borrow
+						}else {
+							V[0xF] = 0; //there is a borrow;
+						}
+						V[(opcode & 0x0f00) >> 8] = ((char)(V[(opcode & 0x0f00) >> 8] - V[(opcode & 0x00f0) >> 4]));
 						pc += 2;
 						break;
 				}
@@ -222,14 +239,24 @@ public class Chip {
 				case 0x0007:{ //FX07: Set VX to the value of delay_timer
 					V[(opcode & 0x0f00) >> 8] = (char)delay_timer;
 					pc +=2;
+					break;
 					
 				}
 					
 				case 0x0015:{ //FX15: Sets delay timer to V[x];
 					delay_timer = V[(opcode & 0x0f00) >> 8];
 					pc += 2;
+					break;
 					
 				}
+				
+				case 0x0018:{ //FX18: Set the sound timer to Vx
+					sound_timer = V[(opcode & 0x0f00) >> 8];
+					pc += 2;
+					break;
+					
+				}
+					
 				
 				case 0x0029:{// Sets I to the location of the sprite for the character VX(Fontset)
 					int character = V[(opcode & 0x0f00) >> 8];
@@ -271,9 +298,11 @@ public class Chip {
 				System.err.println(" Unsuported Opcode!!");
 				//System.exit(0); //Exit success
 		}
-		//Execute Opcode
-		
 		//Update timers
+		if(sound_timer > 0)
+			sound_timer --;
+		if(delay_timer > 0)
+			delay_timer --;
 	}
 	
 	public byte[] getDisplay() {
@@ -339,5 +368,8 @@ public class Chip {
 	//VIDEO 8 COMPLETE
 	//VIDEO 9 COMPLETE
 	//VIDEO 10 COMPLETE
+	//VIDEO 11 COMPLETE 
+	//VIDEO 12 COMPLETE
+	//VIDEO 13 COMPLETE
 	
 }
