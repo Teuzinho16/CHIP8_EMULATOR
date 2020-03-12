@@ -70,6 +70,11 @@ public class Chip {
 				switch(opcode & 0x00ff) {
 					
 					case 0x00E0: //Clear the screen
+						for(int i = 0; i < display.length; i++) {
+							display[i] = 0;
+						}
+						pc += 2; //Next instruction 
+						needRedraw = true;
 						break;
 						
 					case 0x00EE: //Returns from subroutine
@@ -165,6 +170,13 @@ public class Chip {
 						V[(opcode & 0x0f00) >> 8] = ((char)(V[(opcode & 0x0f00) >> 8] - V[(opcode & 0x00f0) >> 4]));
 						pc += 2;
 						break;
+						
+					case 0x0006://8XY6: Stores the least significant bit of VX in VF and then shifts VX to the right by 1
+						int x_x_ = (opcode & 0x0f00) >> 8;
+						V[0xF] = (char)(V[x_x_] & 0x1);
+						V[x_x_] = (char)(V[x_x_] >> 1);
+						pc += 2;
+						break;
 				}
 				break;
 				
@@ -193,6 +205,10 @@ public class Chip {
 						if(pixel != 0) {
 							int totalX = X + _x;
 							int totalY = y + _y;
+							
+							totalX %= 64;
+							totalY %= 32;
+							
 							int index = totalY * 64 + totalX;
 							
 							if(display[index] == 1)
@@ -256,6 +272,13 @@ public class Chip {
 					break;
 					
 				}
+				
+				case 0x001E:{ //FX1E: Adds Vx to I
+					I = (char)(I + V[(opcode & 0x0f00) >> 8]);
+					pc += 2;
+					break;
+					
+				}
 					
 				
 				case 0x0029:{// Sets I to the location of the sprite for the character VX(Fontset)
@@ -282,12 +305,11 @@ public class Chip {
 					}
 				case 0x0065:{//FX65 fills V0 to VX with values from I
 					int z= (opcode & 0x0f00) >> 8;
-					for(int i = 0; i < z ; i++) {
+					for(int i = 0; i <= z ; i++) {
 						V[i] = memory[I + i];
 					}
 					I = (char)(I + z + 1);
 					pc += 2;
-					
 					break;
 				}
 				
@@ -299,8 +321,11 @@ public class Chip {
 				//System.exit(0); //Exit success
 		}
 		//Update timers
-		if(sound_timer > 0)
+		if(sound_timer > 0) {
 			sound_timer --;
+			Audio.playSound("./beep-02.wav");
+		}
+			
 		if(delay_timer > 0)
 			delay_timer --;
 	}
@@ -371,5 +396,6 @@ public class Chip {
 	//VIDEO 11 COMPLETE 
 	//VIDEO 12 COMPLETE
 	//VIDEO 13 COMPLETE
+	//VIDEO 14 COMPLETE         
 	
 }
