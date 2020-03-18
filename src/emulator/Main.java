@@ -12,7 +12,7 @@ public class Main extends Thread {
 	public Main() {
 		chip8 = new Chip();
 		chip8.initialize();
-		chip8.loadProgram("./invaders.c8"); //Loads the ROM
+		chip8.loadProgram("./pong2.c8"); //Loads the ROM
 		frame = new ChipFrame(chip8);
 	}
 	
@@ -31,7 +31,7 @@ public class Main extends Thread {
 				chip8.removeDrawFlag(); 
 			}
 			try {
-				Thread.sleep(4); //1000 / 60 = 16 miliseconds
+				Thread.sleep(1); //1000 / 60 = 16 miliseconds
 			}catch(InterruptedException e) {
 				//Unthrown exception
 			}

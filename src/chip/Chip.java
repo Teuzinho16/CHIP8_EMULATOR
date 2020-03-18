@@ -120,6 +120,13 @@ public class Chip {
 				}
 				break;
 				
+			case 0x5000:// 5XY0 Skips the next instruction  if VX equals VY
+				if(V[(opcode & 0x0f00) >> 8] == V[(opcode & 0x00f0) >> 4])
+					pc += 4;
+				else
+					pc += 2;
+				break;
+				
 				
 			case 0x6000: //6XNN Sets VX to NN - LD Vx, byte - Load one byte to a register x
 				int x = (opcode & 0x0F00) >> 8 ;
@@ -143,9 +150,17 @@ public class Chip {
 						pc += 2;
 						break;
 						
+					case 0x0001://8XY1: Sets VX to VX or VY. (Bitwise OR operation)
+						V[(opcode & 0x0f00) >> 8] = (char)((V[(opcode & 0x0f00) >> 8] | V[(opcode & 0x00f0) >> 4]) & 0xff);
+						pc += 2;
 					
 					case 0x0002: //8XY2: Sets VX to VX & VY
-						V[(opcode & 0x0f00) >> 8] = (char)(V[(opcode & 0x0f00) >> 8] & V[(opcode & 0x00f0) >> 8]);
+						V[(opcode & 0x0f00) >> 8] = (char)((V[(opcode & 0x0f00) >> 8] & V[(opcode & 0x00f0) >> 4]) & 0xff);
+						pc += 2;
+						break;
+						
+					case 0x0003: //8XY3: Sets VX to VX xor VY.
+						V[(opcode & 0x0f00) >> 8] = (char)((V[(opcode & 0x0f00) >> 8] ^ V[(opcode & 0x00f0) >> 4]) & 0xff);
 						pc += 2;
 						break;
 						
@@ -177,13 +192,44 @@ public class Chip {
 						V[x_x_] = (char)(V[x_x_] >> 1);
 						pc += 2;
 						break;
+						
+					case 0x0007://8XY7 Sets VX to VY - VX. VF is set to 0 when there is a borrow, and 1 when there is not.
+						int a = (opcode & 0x0f00) >> 8;
+						int b = (opcode & 0x00f0) >> 4;
+						
+						if(V[a] > V[b])
+							V[0xf] = 0;
+						else
+							V[0xf] = 1;
+						
+						V[a] = (char)((V[b] - V[a]) & 0xff);
+						
+					case 0x000E://8XYE Stores the most significant bit of VX in VF an then shifts VX to the left by one
+						int c = (opcode & 0x0f00) >> 8;
+						V[0xF] = (char)(V[c] & 0x80);
+						V[c] = (char)(V[c] << 1);
+						pc += 2;
+						break;	
 				}
 				break;
+			
+			case 0x9000://9XY0 Skips the next instruction if VX doesn't equal VY. (Usually the next instruction is a jump to skip a code block)
+				
+				if(V[(opcode & 0x0f00) >> 8] != V[(opcode & 0x00f0) >> 4]) {
+					pc += 4;
+				}else {
+					pc += 2;
+				}
 				
 			case 0xA000://ANNN: Set I to NNN - LD I, addr
 				I = (char)(opcode & 0x0FFF);
 				pc += 2; //two bytes - next instruction
 				break;
+				
+			case 0xB000://BNNN: Jumps to the address NNN plus V0
+				pc = (char)((opcode & 0x0fff) + (V[0] & 0xff)); 
+				break;
+				
 				
 			case 0xC000://CXNN: Set VX to a random number & nn
 				int randomNumber = new Random().nextInt(256) & (opcode & 0x00ff);
@@ -258,6 +304,15 @@ public class Chip {
 					break;
 					
 				}
+				
+				case 0x000A: //FX0A A key press is awaited, and then stored in VX
+					for(int i = 0; i < keys.length; i++) {
+						if(keys[i] == 1) {
+							V[(opcode & 0x0f00) >> 8] = (char)i;
+							pc += 2;
+							break;
+						}
+					}
 					
 				case 0x0015:{ //FX15: Sets delay timer to V[x];
 					delay_timer = V[(opcode & 0x0f00) >> 8];
@@ -303,6 +358,15 @@ public class Chip {
 					break;
 					
 					}
+				
+				case 0x0055:{//FX55 Stores V0 to VX in memory starting at adress I
+					for(int i = 0; i <= (opcode & 0x0f00) >> 8; i++) {
+						memory[I + i] = V[i];
+					}
+					pc += 2;
+					break;
+				}
+				
 				case 0x0065:{//FX65 fills V0 to VX with values from I
 					int z= (opcode & 0x0f00) >> 8;
 					for(int i = 0; i <= z ; i++) {
@@ -396,6 +460,9 @@ public class Chip {
 	//VIDEO 11 COMPLETE 
 	//VIDEO 12 COMPLETE
 	//VIDEO 13 COMPLETE
-	//VIDEO 14 COMPLETE         
+	//VIDEO 14 COMPLETE   
+	//VIDEO 15 COMPLETE
+	
+	//FIX BUGS
 	
 }
