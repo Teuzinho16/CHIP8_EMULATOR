@@ -1,5 +1,6 @@
 # Chip8_Emulator
 My attempt to implement an emulator in Java.
+![Chip8](https://i.imgur.com/gHGcTHH.png)
 
 Resources:
 https://www.youtube.com/watch?v=AsukaPLuTsU&list=PL5PyurErl12czoLyYD8za68d61T_OZsP2
