@@ -23,11 +23,11 @@ public class ChipPanel extends JPanel{
 			else
 				g.setColor(Color.white);
 			
-			//X and Y coordinates 
+			// X and Y coordinates 
 			int x = (i % 64);
 			int y = (int)Math.floor(i/64);
 			
-			g.fillRect(x * 10, y * 10, 10, 10);//Scale up to 10 times
+			g.fillRect(x * 10, y * 10, 10, 10);// Scale up to 10 times
 		}
 	}
 	
