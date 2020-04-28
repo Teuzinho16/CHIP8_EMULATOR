@@ -16,7 +16,6 @@ public class Audio {
 			System.out.println("Beep!");
 		}catch(Exception e){
 			System.err.println("Failed to play audio file:"+e.getMessage());
-		}
-		
+		}	
 	}
 }
