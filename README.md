@@ -1,4 +1,4 @@
-# Chip8_Emulator
+# Chip8 Emulator
 My attempt to implement an emulator in Java.
 
 CHIP-8 Running the old and good Invaders :)
