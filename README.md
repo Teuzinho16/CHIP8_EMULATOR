@@ -5,6 +5,8 @@ CHIP-8 Running the old and good Invaders :)
 ![Chip8](https://i.imgur.com/gHGcTHH.png)
 
 # The resources:
+
+Johnnei playlist:
 https://www.youtube.com/watch?v=AsukaPLuTsU&list=PL5PyurErl12czoLyYD8za68d61T_OZsP2
 
 Cowgod's Chip-8 Technical Reference v1.0: 
