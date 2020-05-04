@@ -54,7 +54,7 @@ public class Chip {
 		
 		needRedraw = false;
 		
-		loadFontset();// will load font_set into memory HEX 0x050 - 0x0A0  == DEC 80 - 160 
+		loadFontset(); // will load font_set into memory HEX 0x050 - 0x0A0  == DEC 80 - 160 
 	}
 	
 	public void emulateCycle() {
@@ -428,9 +428,7 @@ public class Chip {
 					
 				}
 			}
-		}
-		
-		
+		}	
 	}
 	
 	public void loadFontset() {
@@ -445,5 +443,4 @@ public class Chip {
 			keys[i] = (byte)keyBuffer[i];
 		}
 	}
-	
 }
