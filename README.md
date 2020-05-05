@@ -1,10 +1,9 @@
-# Chip8 Emulator
-My attempt to implement an emulator in Java.
+<h1 align = "center">Chip8 Emulator</h1>
+<h3 align = "center">My attempt to implement an emulator in Java.</h3>
+<h4 align = "center">CHIP-8 Running the old and good Invaders :)</h4> 
 
-CHIP-8 Running the old and good Invaders :)
-![Chip8](https://i.imgur.com/gHGcTHH.png)
-
-# The resources:
+<h1 align="center"><img title="Chip8 Running Invaders" src="https://i.imgur.com/gHGcTHH.png" width="650px"></h1>
+<h1 align="center">The resources:</h1>
 
 Johnnei playlist:
 https://www.youtube.com/watch?v=AsukaPLuTsU&list=PL5PyurErl12czoLyYD8za68d61T_OZsP2
