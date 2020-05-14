@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.util.Random;
 
 /*--------CHIP_MEMORY_MAP--------
+ * 
  *  0x050-0x0A0 - Used for the built in
  *  4x5 pixel font set (0-F)
  *  0x000-0x1FF Reserved for interpreter
  *  0x200-0xFFF Program ROM and WRAM  
+ *  
  *-------------------------------
  */
 
