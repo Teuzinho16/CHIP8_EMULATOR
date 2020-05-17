@@ -2,7 +2,6 @@
  * 	Mateus de Suza Novaes - 2020
  *  Chip-8 core class 	
  * 	Chip.java
- * 
  * ------------------------------
  */
 
