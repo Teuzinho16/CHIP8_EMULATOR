@@ -1,3 +1,23 @@
+/*-------------------------------	
+ * 	Mateus de Suza Novaes - 2020
+ *  Chip-8 core class 	
+ * 	Chip.java
+ * 
+ * ------------------------------
+ */
+
+
+/*--------CHIP-8_MEMORY_MAP------
+ * 
+ *  0x000-0x1FF Reserved for interpreter
+ *  
+ *  0x050-0x0A0 - Used for the built in 4x5 pixel font set (0-F)
+ * 
+ *  0x200-0xFFF Program ROM and WRAM  
+ *  
+ *-------------------------------
+ */
+
 package chip;
 
 import java.io.DataInputStream;
@@ -6,28 +26,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Random;
 
-/*--------CHIP_MEMORY_MAP--------
- * 
- *  0x050-0x0A0 - Used for the built in
- *  4x5 pixel font set (0-F)
- *  0x000-0x1FF Reserved for interpreter
- *  0x200-0xFFF Program ROM and WRAM  
- *  
- *-------------------------------
- */
-
 public class Chip {
-	private char[] memory;
-	private char[] V;
-	private char I; // Address register(most of the cases will only user 12 bits)
-	private char pc;
 	
-	private char stack[];
-	private int sp;
+	private char[] memory;		// The total memory is 4Kb, we can represent with a vector like that.
+	private char[] V;	   		// CPU registers, V[0] - V[E] General purposes, V[F] carry flag, 16 in total. 
+	private char   I; 	   		// Address register(most of the cases will only user 12 bits).
+	private char   pc;	   		// Program counter, current memory position.
 	
-	// Delay Counter - 60 HZ - 60 updates per/second
-	private int delay_timer;
-	private int sound_timer;
+	private char[] stack;		// Stack with 16 levels, used to remember the current location before a jump or call.
+	private int    sp;		    // Stack pointer, to remember which level of the stack is used.
+	
+	private int    delay_timer;	
+	private int    sound_timer;
 	
 	private byte[] keys;
 	
@@ -36,8 +46,8 @@ public class Chip {
 	private boolean needRedraw;
 	
 	public void initialize() {
-		memory = new char[4096]; // This represents total memory of Chip8
-		V = new char[16]; // 15 general purpose registers and one carry flag register - two bytes each level
+		memory = new char[4096]; 
+		V = new char[16]; 
 		I = 0x0;
 		pc = 0x200;
 		
