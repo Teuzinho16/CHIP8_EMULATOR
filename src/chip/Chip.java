@@ -1,7 +1,7 @@
 /*-------------------------------	
- * 	Mateus de Suza Novaes - 2020
- *  Chip-8 core class 	
- * 	Chip.java
+ * Mateus de Suza Novaes - 2020
+ * Chip-8 core class 	
+ * Chip.java
  * ------------------------------
  */
 
@@ -28,12 +28,12 @@ import java.util.Random;
 public class Chip {
 	
 	private char[] memory;		// The total memory is 4Kb, we can represent with a vector like that.
-	private char[] V;	   		// CPU registers, V[0] - V[E] General purposes, V[F] carry flag, 16 in total. 
-	private char   I; 	   		// Address register(most of the cases will only user 12 bits).
-	private char   pc;	   		// Program counter, current memory position.
+	private char[] V;	   	// CPU registers, V[0] - V[E] General purposes, V[F] carry flag, 16 in total. 
+	private char   I; 	   	// Address register(most of the cases will only user 12 bits).
+	private char   pc;	   	// Program counter, current memory position.
 	
 	private char[] stack;		// Stack with 16 levels, used to remember the current location before a jump or call.
-	private int    sp;		    // Stack pointer, to remember which level of the stack is used.
+	private int    sp;		// Stack pointer, to remember which level of the stack is used.
 	
 	private int    delay_timer;	
 	private int    sound_timer;
