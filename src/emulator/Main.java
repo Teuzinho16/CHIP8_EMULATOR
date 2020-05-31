@@ -31,7 +31,7 @@ public class Main extends Thread {
 				chip8.removeDrawFlag(); 
 			}
 			try {
-				Thread.sleep(1); // 1000 / 60 = 16 miliseconds
+				Thread.sleep(4); // 1000 / 60 = 16 miliseconds
 			}catch(InterruptedException e) {
 				// Unthrown exception
 			}

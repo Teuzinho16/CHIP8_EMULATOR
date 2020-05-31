@@ -1,5 +1,5 @@
 /*-------------------------------	
- * Mateus de Suza Novaes - 2020
+ * Mateus de Souza Novaes - 2020
  * Chip-8 core class 	
  * Chip.java
  * ------------------------------
@@ -28,21 +28,21 @@ import java.util.Random;
 public class Chip {
 	
 	private char[] memory;		// The total memory is 4Kb, we can represent with a vector like that.
-	private char[] V;	   	// CPU registers, V[0] - V[E] General purposes, V[F] carry flag, 16 in total. 
-	private char   I; 	   	// Address register(most of the cases will only user 12 bits).
-	private char   pc;	   	// Program counter, current memory position.
+	private char[] V;		   	// CPU registers, V[0] - V[E] General purposes, V[F] carry flag - Borrow - Collision Detection, 16 in total. 
+	private char I;				// Address register(most of the cases will only user 12 bits).
+	private char pc;			// Program counter, current memory position.
 	
 	private char[] stack;		// Stack with 16 levels, used to remember the current location before a jump or call.
-	private int    sp;		// Stack pointer, to remember which level of the stack is used.
+	private int sp;				// Stack pointer, to remember which level of the stack is used.
 	
-	private int    delay_timer;	
-	private int    sound_timer;
+	private int	delay_timer;	// Timer register 1: Count down to ZERO at 60hz; Used to delay events in ROM.	
+	private int	sound_timer;	// Timer register 2: Count down to ZERO at 60hz; BEEP sound plays when reaches zero.
 	
-	private byte[] keys;
+	private byte[] keys;		// HEX based keypad(0x0 - 0xF); Store current state of key in a array.
 	
-	private byte[] display;
+	private byte[] display;		// 64x32 pixel monochrome display; Pixel state can be 1 or 0. 
 	
-	private boolean needRedraw;
+	private boolean needRedraw; // Need redraw display flag.
 	
 	public void initialize() {
 		memory = new char[4096]; 
