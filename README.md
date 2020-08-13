@@ -19,3 +19,6 @@ http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter
 
 Creating a Chip8 interpreter/emulator in C++14(Bisqwit channel): 
 https://www.youtube.com/watch?v=rpLoS7B6T94
+
+Plans to future:
+Create an assembler and debugger to Chip8
