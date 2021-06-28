@@ -1,5 +1,4 @@
 <h1 align = "center">Chip-8 Emulator</h1>
-<h3 align = "center">My attempt to implement an emulator in Java.</h3>
 <h4 align = "center">CHIP-8 Running the old and good Invaders :)</h4> 
 
 <h1 align="center"><img title="Chip8 Running Invaders" src="https://i.imgur.com/gHGcTHH.png" width="650px"></h1>
