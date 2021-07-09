@@ -4,7 +4,7 @@
 <h1 align="center"><img title="Chip8 Running Invaders" src="https://i.imgur.com/gHGcTHH.png" width="650px"></h1>
 <h1 align="center">The resources:</h1>
 
-Pong on my CHIP-8 Emulator:
+Pong on my CHIP-8 Emulator(my channel):
 https://www.youtube.com/watch?v=2dxrbDo03WY&t=3s
 
 Johnnei playlist:
